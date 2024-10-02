@@ -1,0 +1,1486 @@
+{
+  "data": [
+    {
+      "type": "instance",
+      "subtype": "app-instance",
+      "componentId": "app",
+      "id": 4012120,
+      "isVisible": true,
+      "children": []
+    }
+  ],
+  "components": [
+    {
+      "id": "app",
+      "type": "component",
+      "subtype": "app-component",
+      "kit": "tailwind",
+      "isVisible": true,
+      "code": "",
+      "globalStyle": "",
+      "muiTheme": "{\n\n}",
+      "children": [
+        {
+          "type": "instance",
+          "subtype": "page-instance",
+          "componentId": 3649332,
+          "id": 1340455,
+          "isVisible": true,
+          "children": []
+        },
+        {
+          "type": "instance",
+          "subtype": "page-instance",
+          "componentId": 3692257,
+          "id": 9181211,
+          "isVisible": true,
+          "children": []
+        },
+        {
+          "type": "instance",
+          "subtype": "page-instance",
+          "componentId": 1908320,
+          "id": 4365744,
+          "isVisible": true,
+          "children": []
+        },
+        {
+          "type": "instance",
+          "subtype": "page-instance",
+          "componentId": 6066678,
+          "id": 554998,
+          "isVisible": true,
+          "children": []
+        },
+        {
+          "type": "instance",
+          "subtype": "page-instance",
+          "componentId": 7928222,
+          "id": 3343343,
+          "isVisible": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "component",
+      "subtype": "page-component",
+      "path": "sign-up",
+      "id": 3649332,
+      "isVisible": true,
+      "code": "",
+      "description": "",
+      "requireAuth": false,
+      "children": [
+        {
+          "type": "instance",
+          "componentId": 4379417,
+          "id": 1707339,
+          "attributes": "{\n  // Size (sm, md, lg)\n  size: \"md\",  \n  // Background color (class name)\n  bgColor: \"bg-blue-800\",\n  // Background image URL\n  bgImage: \"https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?auto=format&fit=crop&w=1200&h=800&q=80\",\n  // Background image opacity (0-1)\n  bgImageOpacity: 0.8,\n  // Text color (class name)\n  textColor: \"text-white\",\n  // signin, signup, forgotpass, changepass\n  type: \"signup\",\n  // Enable other auth providers\n  // google, facebook, twitter, github\n  providers: [\"google\", \"facebook\", \"twitter\"],\n  // Where to take user after auth\n  afterAuthPath: \"/dashboard\",\n  // Scroll down to \"Code\" section\n  // to customize further.\n}",
+          "isVisible": true,
+          "children": [],
+          "libraryName": "AuthSection",
+          "creator": ""
+        }
+      ]
+    },
+    {
+      "type": "component",
+      "id": 5895224,
+      "name": "Section",
+      "code": "  const {\n    size,\n    bgColor = \"bg-white\",\n    textColor,\n    bgImage,\n    bgImageOpacity,\n    bgImageRepeat,\n    className,\n    children,\n    ...otherProps\n  } = props;\n",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "section",
+          "id": 9317042,
+          "attributes": "{\n\t...otherProps,\n}",
+          "classNames": [
+            "section",
+            "relative"
+          ],
+          "classNameExpressions": [
+            {
+              "js": "bgColor",
+              "classNames": [
+                "{bgColor}"
+              ]
+            },
+            {
+              "js": "textColor",
+              "classNames": [
+                "{textColor}"
+              ]
+            },
+            {
+              "js": "className",
+              "classNames": [
+                "{className}"
+              ]
+            }
+          ],
+          "children": [
+            {
+              "type": "if",
+              "js": "bgImage",
+              "id": 6320663,
+              "children": [
+                {
+                  "type": "instance",
+                  "componentId": 8344332,
+                  "id": 1729353,
+                  "attributes": "{\n\timage: bgImage,\n  opacity: bgImageOpacity,\n  repeat: bgImageRepeat,\n}",
+                  "isVisible": true,
+                  "children": []
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "element",
+              "tagName": "div",
+              "id": 9027450,
+              "classNames": [
+                "[&>.container]:relative"
+              ],
+              "classNameExpressions": [
+                {
+                  "js": "size === \"sm\"",
+                  "classNames": [
+                    "py-10"
+                  ]
+                },
+                {
+                  "js": "size === \"md\"",
+                  "classNames": [
+                    "py-10",
+                    "md:py-20"
+                  ]
+                },
+                {
+                  "js": "size === \"lg\"",
+                  "classNames": [
+                    "py-10",
+                    "md:py-32"
+                  ]
+                }
+              ],
+              "children": [
+                {
+                  "type": "children",
+                  "id": 3573817,
+                  "isVisible": true
+                }
+              ],
+              "isVisible": true,
+              "attributes": "{\n\n}",
+              "image": "",
+              "name": "",
+              "style": ""
+            }
+          ],
+          "isVisible": true,
+          "image": "",
+          "name": "",
+          "style": ""
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 8344332,
+      "name": "BackgroundImage",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "div",
+          "id": 9299448,
+          "attributes": "{\n\tstyle: {\n \t\t\"--image\": `url(\"${props.image}\")`,\n \t\t\"--opacity\": props.opacity,\n  }\n}",
+          "classNames": [
+            "bg-[image:var(--image)]",
+            "opacity-[var(--opacity)]",
+            "absolute",
+            "top-0",
+            "left-0",
+            "bottom-0",
+            "right-0",
+            "z-0"
+          ],
+          "classNameExpressions": [
+            {
+              "js": "props.repeat",
+              "classNames": [
+                "bg-auto",
+                "bg-left-top",
+                "bg-repeat"
+              ]
+            },
+            {
+              "js": "!props.repeat",
+              "classNames": [
+                "bg-center",
+                "bg-cover"
+              ]
+            }
+          ],
+          "isVisible": true,
+          "image": "",
+          "name": "",
+          "style": "",
+          "children": []
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "code": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 8076449,
+      "name": "SectionHeader",
+      "code": "  // Render nothing if no title or subtitle\n  if (!props.title && !props.subtitle && !props.strapline) {\n    return null;\n  }",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "header",
+          "id": 9312029,
+          "classNames": [
+            "mb-8",
+            "last:mb-0"
+          ],
+          "classNameExpressions": [
+            {
+              "js": "props.className",
+              "classNames": [
+                "{props.className}"
+              ]
+            }
+          ],
+          "children": [
+            {
+              "type": "if",
+              "js": "props.strapline",
+              "id": 4950644,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "div",
+                  "id": 1712672,
+                  "classNames": [
+                    "text-sm",
+                    "uppercase",
+                    "font-bold",
+                    "tracking-wider",
+                    "mb-1",
+                    "text-blue-700"
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{props.strapline}",
+                      "id": 6224629,
+                      "isVisible": true
+                    }
+                  ],
+                  "isVisible": true,
+                  "attributes": "{\n\n}",
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "props.title",
+              "id": 5402917,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "h1",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{props.title}",
+                      "id": 5074113,
+                      "isVisible": true
+                    }
+                  ],
+                  "id": 9375869,
+                  "classNames": [
+                    "text-3xl",
+                    "md:text-4xl",
+                    "font-extrabold"
+                  ],
+                  "isVisible": true,
+                  "attributes": "{\n\n}",
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "props.subtitle",
+              "id": 6405559,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "h2",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{props.subtitle}",
+                      "id": 3095860,
+                      "isVisible": true
+                    }
+                  ],
+                  "id": 8752740,
+                  "classNames": [
+                    "mt-4",
+                    "inline-block",
+                    "text-lg",
+                    "md:text-xl",
+                    "md:leading-relaxed",
+                    "font-medium",
+                    "max-w-screen-md",
+                    "opacity-80"
+                  ],
+                  "isVisible": true,
+                  "attributes": "{\n\n}",
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            }
+          ],
+          "isVisible": true,
+          "attributes": "{\n\n}",
+          "image": "",
+          "name": "",
+          "style": ""
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 3741985,
+      "name": "Button",
+      "code": "\tconst {\n    size = \"md\",\n    variant = \"primary\",\n    type = \"button\",\n    children,\n    onClick,\n    className,\n    disabled = false,\n    href,\n    target,\n    isBlock = false,\n    startIcon,\n    endIcon,\n    component,\n    ...buttonProps\n  } = props;\n\n  // Element to render\n  const Element = component \n  \t? component \n  \t: props.href ? \"a\" : \"button\";\n\n  // Tailwind classes\n  const classes = {\n    base: \"inline-flex justify-center items-center border font-semibold focus:outline-none rounded focus:ring disabled:opacity-50\",\n    link: \"whitespace-nowrap\",\n    block: \"block w-full\",\n    size: {\n      sm: \"px-3 py-2 leading-5 text-sm space-x-2\",\n      md: \"px-3 py-2 leading-6 space-x-3\",\n      lg: \"px-4 py-3 leading-6 space-x-3\",\n      xl: \"px-6 py-4 leading-6 space-x-3\",\n    },\n    variant: {\n      primary:\n        \"border-blue-700 bg-blue-700 text-white hover:text-white hover:bg-blue-800 hover:border-blue-800 focus:ring-blue-500 focus:ring-opacity-50 active:bg-blue-700 active:border-blue-700\",\n      secondary:\n        \"border-blue-200 bg-blue-200 text-blue-700 hover:text-blue-700 hover:bg-blue-300 hover:border-blue-300 focus:ring-blue-500 focus:ring-opacity-50 active:bg-blue-200 active:border-blue-200\",\n      simple:\n        \"border-gray-300 bg-white text-gray-800 shadow-sm hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white\",\n      light:\n        \"border-gray-200 bg-gray-200 text-gray-700 hover:text-gray-700 hover:bg-gray-300 hover:border-gray-300 focus:ring-gray-500 focus:ring-opacity-25 active:bg-gray-200 active:border-gray-200\",\n      dark: \"border-gray-700 bg-gray-700 text-white hover:text-white hover:bg-gray-800 hover:border-gray-800 focus:ring-gray-500 focus:ring-opacity-25 active:bg-gray-700 active:border-gray-700\",\n    },\n  };\n",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "Element",
+          "id": 2663832,
+          "attributes": "{\n\thref: href,\n  target: target,\n  type: type,\n  onClick: onClick,\n  disabled: disabled,\n  ...buttonProps,\n}",
+          "classNames": [
+            "{classes.base}",
+            "{classes.size[size]}",
+            "{classes.variant[variant]}"
+          ],
+          "classNameExpressions": [
+            {
+              "js": "Element === \"a\"",
+              "classNames": [
+                "{classes.link}"
+              ]
+            },
+            {
+              "js": "isBlock",
+              "classNames": [
+                "{classes.block}"
+              ]
+            },
+            {
+              "js": "className",
+              "classNames": [
+                "{className}"
+              ]
+            }
+          ],
+          "children": [
+            {
+              "type": "if",
+              "js": "startIcon",
+              "id": 3698614,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "span",
+                  "id": 175421,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{startIcon}",
+                      "id": 4989247,
+                      "isVisible": true
+                    }
+                  ],
+                  "isVisible": true,
+                  "attributes": "{\n\n}",
+                  "image": "",
+                  "name": "",
+                  "classNames": [],
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "children",
+              "id": 5016154,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "span",
+                  "id": 2150889,
+                  "children": [
+                    {
+                      "type": "children",
+                      "id": 4320319,
+                      "isVisible": true
+                    }
+                  ],
+                  "isVisible": true,
+                  "attributes": "{\n\n}",
+                  "image": "",
+                  "name": "",
+                  "classNames": [],
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "endIcon",
+              "id": 4711988,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "span",
+                  "id": 6641920,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{endIcon}",
+                      "id": 7032357,
+                      "isVisible": true
+                    }
+                  ],
+                  "isVisible": true,
+                  "attributes": "{\n\n}",
+                  "image": "",
+                  "name": "",
+                  "classNames": [],
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            }
+          ],
+          "isVisible": true,
+          "image": "",
+          "name": "",
+          "style": ""
+        }
+      ],
+      "forwardRef": true,
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 9894556,
+      "name": "TextField",
+      "code": "  const {\n    error,\n    type = \"text\",\n    size = \"md\",\n    label,\n    className,\n    inputRef,\n    ...inputProps\n  } = props;  \n\n\tconst classes = {\n    base: \"block border placeholder-gray-400 z-10 w-full rounded active:z-10 focus:z-10 -mr-px border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50\",\n    size: {\n      sm: \"py-2 leading-5\",\n      md: \"px-4 py-3 leading-6\",\n      lg: \"\",\n    },\n  };\n",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "div",
+          "id": 4698684,
+          "classNames": [
+            "w-full"
+          ],
+          "classNameExpressions": [
+            {
+              "js": "className",
+              "classNames": [
+                "{className}"
+              ]
+            }
+          ],
+          "children": [
+            {
+              "type": "if",
+              "js": "label",
+              "id": 4189335,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "label",
+                  "id": 3465724,
+                  "attributes": "{\n\thtmlFor: props.id,\n}",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{label}",
+                      "id": 9773132,
+                      "isVisible": true
+                    }
+                  ],
+                  "classNames": [
+                    "block",
+                    "mb-1",
+                    "font-medium"
+                  ],
+                  "isVisible": true,
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "type === \"textarea\"",
+              "id": 2463369,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "textarea",
+                  "id": 7518885,
+                  "attributes": "{\n\tref: inputRef,\n\t...inputProps,\n}",
+                  "classNames": [
+                    "{classes.base}",
+                    "{classes.size[size]}"
+                  ],
+                  "isVisible": true,
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": "",
+                  "children": []
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "type !== \"textarea\"",
+              "id": 972599,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "input",
+                  "id": 3895023,
+                  "attributes": "{\n\tref: inputRef,\n  type: type,\n\t...inputProps,\n}",
+                  "classNames": [
+                    "{classes.base}",
+                    "{classes.size[size]}"
+                  ],
+                  "isVisible": true,
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": "",
+                  "children": []
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "error",
+              "id": 5081845,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "p",
+                  "id": 2452609,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{error.message}",
+                      "id": 8057762,
+                      "isVisible": true
+                    }
+                  ],
+                  "classNames": [
+                    "text-sm",
+                    "text-left",
+                    "text-red-600",
+                    "mt-1"
+                  ],
+                  "isVisible": true,
+                  "attributes": "{\n\n}",
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            }
+          ],
+          "isVisible": true,
+          "attributes": "{\n\n}",
+          "image": "",
+          "name": "",
+          "style": ""
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 1290604,
+      "name": "Auth",
+      "code": "  const router = useRouter();\n  const [formAlert, setFormAlert] = useState(null);\n\n  const handleAuth = (user) => {\n    router.push(props.afterAuthPath);\n  };\n\n  const handleFormAlert = (data) => {\n    setFormAlert(data);\n  };\n",
+      "children": [
+        {
+          "type": "if",
+          "js": "formAlert",
+          "id": 8718633,
+          "children": [
+            {
+              "type": "element",
+              "tagName": "div",
+              "id": 3071700,
+              "classNames": [
+                "mb-4"
+              ],
+              "children": [
+                {
+                  "type": "instance",
+                  "componentId": 831632,
+                  "id": 7030217,
+                  "attributes": "{\n\ttype: formAlert.type,\n  message: formAlert.message,\n}",
+                  "isVisible": true,
+                  "children": []
+                }
+              ],
+              "isVisible": true,
+              "attributes": "{\n\n}",
+              "image": "",
+              "name": "",
+              "classNameExpressions": [],
+              "style": ""
+            }
+          ],
+          "isVisible": true
+        },
+        {
+          "type": "instance",
+          "componentId": 1986667,
+          "id": 4828966,
+          "attributes": "{\n\ttype: props.type,\n  buttonAction: props.buttonAction,\n  onAuth: handleAuth,\n  onFormAlert: handleFormAlert,\n}",
+          "isVisible": true,
+          "children": []
+        },
+        {
+          "type": "if",
+          "js": "[\"signup\", \"signin\"].includes(props.type)",
+          "id": 7707116,
+          "children": [
+            {
+              "type": "if",
+              "js": "props.providers && props.providers.length",
+              "id": 2291793,
+              "children": [
+                {
+                  "type": "instance",
+                  "componentId": 3803465,
+                  "id": 2681828,
+                  "attributes": "{\n\tbuttonAction: props.buttonAction,\n  providers: props.providers,\n  showLastUsed: true,\n  onAuth: handleAuth,\n  onError: (message) => {\n  \thandleFormAlert({\n    \ttype: \"error\",\n      message: message,\n    });\n  },\n}",
+                  "isVisible": true,
+                  "children": []
+                }
+              ],
+              "isVisible": true
+            }
+          ],
+          "isVisible": true
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 2085299,
+      "name": "AuthFooter",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "div",
+          "id": 3586784,
+          "classNames": [
+            "px-3",
+            "mt-6",
+            "text-sm",
+            "text-center"
+          ],
+          "classNameExpressions": [
+            {
+              "js": "props.className",
+              "classNames": [
+                "{props.className}"
+              ]
+            }
+          ],
+          "children": [
+            {
+              "type": "if",
+              "js": "props.type === \"signup\"",
+              "id": 6747454,
+              "children": [
+                {
+                  "type": "if",
+                  "js": "props.showAgreement",
+                  "id": 1470813,
+                  "children": [
+                    {
+                      "type": "element",
+                      "tagName": "div",
+                      "id": 6467877,
+                      "classNames": [
+                        "mb-3"
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "text": "By signing up, you are agreeing to our{\" \"}",
+                          "id": 1923714,
+                          "isVisible": true
+                        },
+                        {
+                          "type": "element",
+                          "tagName": "a",
+                          "attributes": "{\n  href: props.termsPath,\n}",
+                          "children": [
+                            {
+                              "type": "text",
+                              "text": "Terms of Service",
+                              "id": 2997764,
+                              "isVisible": true
+                            }
+                          ],
+                          "id": 9257451,
+                          "classNames": [
+                            "text-blue-600"
+                          ],
+                          "isVisible": true,
+                          "image": "",
+                          "name": "",
+                          "classNameExpressions": [],
+                          "style": ""
+                        },
+                        {
+                          "type": "text",
+                          "text": "{\" \"}and{\" \"}",
+                          "id": 6198359,
+                          "isVisible": true
+                        },
+                        {
+                          "type": "element",
+                          "tagName": "a",
+                          "attributes": "{\n  href: props.privacyPolicyPath,\n}",
+                          "children": [
+                            {
+                              "type": "text",
+                              "text": "Privacy Policy",
+                              "id": 2485608,
+                              "isVisible": true
+                            }
+                          ],
+                          "id": 1983446,
+                          "classNames": [
+                            "text-blue-600"
+                          ],
+                          "isVisible": true,
+                          "image": "",
+                          "name": "",
+                          "classNameExpressions": [],
+                          "style": ""
+                        },
+                        {
+                          "type": "text",
+                          "text": ".",
+                          "id": 1938727,
+                          "isVisible": true
+                        }
+                      ],
+                      "isVisible": true,
+                      "attributes": "{\n\n}",
+                      "image": "",
+                      "name": "",
+                      "classNameExpressions": [],
+                      "style": ""
+                    }
+                  ],
+                  "isVisible": true
+                },
+                {
+                  "type": "text",
+                  "text": "{props.signinText}",
+                  "id": 2072745,
+                  "isVisible": true
+                },
+                {
+                  "type": "element",
+                  "tagName": "a",
+                  "attributes": "{\n  href: props.signinPath,\n}",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{props.signinAction}",
+                      "id": 9353288,
+                      "isVisible": true
+                    }
+                  ],
+                  "id": 8108213,
+                  "classNames": [
+                    "ml-3",
+                    "text-blue-600"
+                  ],
+                  "isVisible": true,
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "props.type === \"signin\"",
+              "id": 1149518,
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "a",
+                  "attributes": "{\n  href: props.signupPath,\n}",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{props.signupAction}",
+                      "id": 6029419,
+                      "isVisible": true
+                    }
+                  ],
+                  "id": 4947026,
+                  "classNames": [
+                    "text-blue-600"
+                  ],
+                  "isVisible": true,
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                },
+                {
+                  "type": "if",
+                  "js": "props.forgotPassAction",
+                  "id": 9070960,
+                  "children": [
+                    {
+                      "type": "element",
+                      "tagName": "a",
+                      "attributes": "{\n  href: props.forgotPassPath,\n}",
+                      "children": [
+                        {
+                          "type": "text",
+                          "text": "{props.forgotPassAction}",
+                          "id": 7282539,
+                          "isVisible": true
+                        }
+                      ],
+                      "id": 8881532,
+                      "classNames": [
+                        "ml-4",
+                        "text-blue-600"
+                      ],
+                      "isVisible": true,
+                      "image": "",
+                      "name": "",
+                      "classNameExpressions": [],
+                      "style": ""
+                    }
+                  ],
+                  "isVisible": true
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "props.type === \"forgotpass\"",
+              "id": 2495620,
+              "children": [
+                {
+                  "type": "text",
+                  "text": "{props.signinText}",
+                  "id": 6245095,
+                  "isVisible": true
+                },
+                {
+                  "type": "element",
+                  "tagName": "a",
+                  "attributes": "{\n  href: props.signinPath,\n}",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{props.signinAction}",
+                      "id": 8747529,
+                      "isVisible": true
+                    }
+                  ],
+                  "id": 6400715,
+                  "classNames": [
+                    "ml-3",
+                    "text-blue-600"
+                  ],
+                  "isVisible": true,
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true
+            }
+          ],
+          "isVisible": true,
+          "attributes": "{\n\n}",
+          "image": "",
+          "name": "",
+          "style": ""
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "code": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 1986667,
+      "name": "AuthForm",
+      "code": "const auth = useAuth();\n\n  const [pending, setPending] = useState(false);\n  const { handleSubmit, register, errors, getValues } = useForm();\n\n  const submitHandlersByType = {\n    signin: ({ email, pass }) => {\n      return auth.signin(email, pass).then((user) => {\n        // Call auth complete handler\n        props.onAuth(user);\n      });\n    },\n    signup: ({ email, pass }) => {\n      return auth.signup(email, pass).then((user) => {\n        // Call auth complete handler\n        props.onAuth(user);\n      });\n    },\n    forgotpass: ({ email }) => {\n      return auth.sendPasswordResetEmail(email).then(() => {\n        setPending(false);\n        // Show success alert message\n        props.onFormAlert({\n          type: \"success\",\n          message: \"Password reset email sent\",\n        });\n      });\n    },\n    changepass: ({ pass }) => {\n      return auth.confirmPasswordReset(pass).then(() => {\n        setPending(false);\n        // Show success alert message\n        props.onFormAlert({\n          type: \"success\",\n          message: \"Your password has been changed\",\n        });\n      });\n    },\n  };\n\n  // Handle form submission\n  const onSubmit = ({ email, pass }) => {\n    // Show pending indicator\n    setPending(true);\n\n    // Call submit handler for auth type\n    submitHandlersByType[props.type]({\n      email,\n      pass,\n    }).catch((error) => {\n      setPending(false);\n      // Show error alert message\n      props.onFormAlert({\n        type: \"error\",\n        message: error.message,\n      });\n    });\n  };\n",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "form",
+          "id": 5148917,
+          "attributes": "{\n\tonSubmit: handleSubmit(onSubmit),\n}",
+          "classNames": [
+            "space-y-3"
+          ],
+          "children": [
+            {
+              "type": "if",
+              "js": "[\"signup\", \"signin\", \"forgotpass\"].includes(props.type)",
+              "id": 4489035,
+              "children": [
+                {
+                  "type": "instance",
+                  "componentId": 9894556,
+                  "id": 5430771,
+                  "attributes": "{\n\ttype: \"email\",\n  id: \"email\",\n  name: \"email\",\n  placeholder: \"Email\",\n  error: errors.email,\n  inputRef: register({\n  \trequired: \"Please enter an email address\",\n  }),\n}",
+                  "isVisible": true,
+                  "children": []
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "[\"signup\", \"signin\", \"changepass\"].includes(props.type)",
+              "id": 6508448,
+              "children": [
+                {
+                  "type": "instance",
+                  "componentId": 9894556,
+                  "id": 1752495,
+                  "attributes": "{\n\ttype: \"password\",\n  id: \"pass\",\n  name: \"pass\",\n  placeholder: \"Password\",\n  error: errors.pass,\n  inputRef: register({\n  \trequired: \"Please enter a password\",\n  }),\n}",
+                  "isVisible": true,
+                  "children": []
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "if",
+              "js": "[\"signup\", \"changepass\"].includes(props.type)",
+              "id": 7857220,
+              "children": [
+                {
+                  "type": "instance",
+                  "componentId": 9894556,
+                  "id": 6365798,
+                  "attributes": "{\n\ttype: \"password\",\n  id: \"confirmPass\",\n  name: \"confirmPass\",\n  placeholder: \"Confirm Password\",\n  error: errors.confirmPass,\n  inputRef: register({\n  \trequired: \"Please enter your password again\",\n    validate: (value) => {\n    \tif (value === getValues().pass) {\n      \treturn true;\n     \t} else {\n      \treturn \"This doesn't match your password\";\n      }\n    },\n  }),\n}",
+                  "isVisible": true,
+                  "children": []
+                }
+              ],
+              "isVisible": true
+            },
+            {
+              "type": "instance",
+              "componentId": 3741985,
+              "id": 9082323,
+              "attributes": "{\n  type: \"submit\",\n  size: \"lg\",\n  disabled: pending,\n  isBlock: true,\n}",
+              "children": [
+                {
+                  "type": "if",
+                  "js": "pending",
+                  "id": 678874,
+                  "children": [
+                    {
+                      "type": "instance",
+                      "componentId": 8182717,
+                      "id": 5191243,
+                      "attributes": "{\n\tclassName: \"w-6\",\n}",
+                      "isVisible": true,
+                      "children": []
+                    }
+                  ],
+                  "isVisible": true
+                },
+                {
+                  "type": "if",
+                  "js": "!pending",
+                  "id": 4803103,
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "{props.buttonAction}",
+                      "id": 1684664,
+                      "isVisible": true
+                    }
+                  ],
+                  "isVisible": true
+                }
+              ],
+              "isVisible": true
+            }
+          ],
+          "isVisible": true,
+          "image": "",
+          "name": "",
+          "classNameExpressions": [],
+          "style": ""
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 3803465,
+      "name": "AuthSocial",
+      "code": " const auth = useAuth();\n  const [pending, setPending] = useState(null);\n\n  const providerDisplayNames = {\n    google: \"Google\",\n    facebook: \"Facebook\",\n    twitter: \"Twitter\",\n    github: \"GitHub\",\n  };\n\n  const onSigninWithProvider = (provider) => {\n    setPending(provider);\n    auth\n      .signinWithProvider(provider)\n      .then((user) => {\n        // Remember this provider was last used\n        // so we can indicate for next login.\n        localStorage.setItem(\"lastUsedAuthProvider\", provider);\n        props.onAuth(user);\n      })\n      .catch((error) => {\n        setPending(null);\n        props.onError(error.message);\n      });\n  };\n",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "div",
+          "id": 426572,
+          "classNames": [
+            "mt-8",
+            "space-y-2"
+          ],
+          "children": [
+            {
+              "type": "foreach",
+              "id": 8133689,
+              "valName": "provider",
+              "objectName": "props.providers",
+              "children": [
+                {
+                  "type": "element",
+                  "tagName": "div",
+                  "id": 6542177,
+                  "attributes": "{\n\tkey: provider,\n}",
+                  "classNames": [
+                    "mb-2"
+                  ],
+                  "children": [
+                    {
+                      "type": "instance",
+                      "componentId": 3741985,
+                      "id": 551157,
+                      "attributes": "{\n  size: \"lg\",\n  variant: \"simple\",\n  disabled: pending === provider,\n  isBlock: true,\n  onClick: () => {\n  \tonSigninWithProvider(provider);\n  },\n  startIcon: (\n  \tpending !== provider && <img\n      src={`https://uploads.divjoy.com/icon-${provider}.svg`}\n      alt={providerDisplayNames[provider]}\n      className=\"w-5 h-5\"\n    />\n  ),\n}",
+                      "children": [
+                        {
+                          "type": "if",
+                          "js": "pending === provider",
+                          "id": 254222,
+                          "children": [
+                            {
+                              "type": "instance",
+                              "componentId": 8182717,
+                              "id": 1591878,
+                              "attributes": "{\n\tclassName: \"w-6\",\n}",
+                              "isVisible": true,
+                              "children": []
+                            }
+                          ],
+                          "isVisible": true
+                        },
+                        {
+                          "type": "if",
+                          "js": "pending !== provider",
+                          "id": 1654609,
+                          "children": [
+                            {
+                              "type": "text",
+                              "text": "{props.buttonAction} with {providerDisplayNames[provider]}",
+                              "id": 8568323,
+                              "isVisible": true
+                            }
+                          ],
+                          "isVisible": true
+                        }
+                      ],
+                      "isVisible": true
+                    }
+                  ],
+                  "isVisible": true,
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true,
+              "objectType": "array",
+              "indexName": ""
+            }
+          ],
+          "isVisible": true,
+          "attributes": "{\n\n}",
+          "image": "",
+          "name": "",
+          "classNameExpressions": [],
+          "style": ""
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "name": "AuthSection",
+      "children": [
+        {
+          "type": "instance",
+          "componentId": 5895224,
+          "id": 8517948,
+          "attributes": "{\n\tsize: props.size,\n  bgColor: props.bgColor,\n  bgImage: props.bgImage, \n  bgImageOpacity: props.bgImageOpacity,\n  textColor: props.textColor,\n}",
+          "children": [
+            {
+              "type": "element",
+              "tagName": "div",
+              "id": 1593393,
+              "classNames": [
+                "container",
+                "max-w-md"
+              ],
+              "children": [
+                {
+                  "type": "instance",
+                  "componentId": 8076449,
+                  "id": 5405449,
+                  "attributes": "{\n\ttitle: options.title,\n  subtitle: \"\",\n  strapline: \"\",\n  className: \"text-center\",\n}",
+                  "isVisible": true,
+                  "children": []
+                },
+                {
+                  "type": "element",
+                  "tagName": "div",
+                  "id": 8820146,
+                  "classNames": [
+                    "bg-white",
+                    "text-black",
+                    "rounded-lg",
+                    "p-4"
+                  ],
+                  "children": [
+                    {
+                      "type": "instance",
+                      "componentId": 1290604,
+                      "id": 547206,
+                      "attributes": "{\n\ttype: type,\n  buttonAction: options.buttonAction,\n  providers: props.providers,\n  afterAuthPath: props.afterAuthPath,\n  key: type,\n}",
+                      "isVisible": true,
+                      "children": []
+                    },
+                    {
+                      "type": "if",
+                      "js": "options.showFooter",
+                      "id": 8480127,
+                      "children": [
+                        {
+                          "type": "instance",
+                          "componentId": 2085299,
+                          "id": 421420,
+                          "attributes": "{\n\ttype: type,\n  ...options,\n}",
+                          "isVisible": true,
+                          "children": []
+                        }
+                      ],
+                      "isVisible": true
+                    }
+                  ],
+                  "isVisible": true,
+                  "attributes": "{\n\n}",
+                  "image": "",
+                  "name": "",
+                  "classNameExpressions": [],
+                  "style": ""
+                }
+              ],
+              "isVisible": true,
+              "attributes": "{\n\n}",
+              "image": "",
+              "name": "",
+              "classNameExpressions": [],
+              "style": ""
+            }
+          ],
+          "isVisible": true
+        }
+      ],
+      "code": "\t// Options by auth type\n  const optionsByType = {\n    signup: {\n      // Top Title\n      title: \"Get yourself an account\",\n      // Button text\n      buttonAction: \"Sign up\",\n      // Footer text and links\n      showFooter: true,\n      signinText: \"Already have an account?\",\n      signinAction: \"Sign in\",\n      signinPath: \"/auth/signin\",\n      // Terms and privacy policy agreement\n      showAgreement: true,\n      termsPath: \"/legal/terms-of-service\",\n      privacyPolicyPath: \"/legal/privacy-policy\",\n    },\n    signin: {\n      title: \"Welcome back\",\n      buttonAction: \"Sign in\",\n      showFooter: true,\n      signupAction: \"Create an account\",\n      signupPath: \"/auth/signup\",\n      forgotPassAction: \"Forgot Password?\",\n      forgotPassPath: \"/auth/forgotpass\",\n    },\n    forgotpass: {\n      title: \"Get a new password\",\n      buttonAction: \"Reset password\",\n      showFooter: true,\n      signinText: \"Remember it after all?\",\n      signinAction: \"Sign in\",\n      signinPath: \"/auth/signin\",\n    },\n    changepass: {\n      title: \"Choose a new password\",\n      buttonAction: \"Change password\",\n    },\n  };\n\n  // Ensure we have a valid auth type\n  const type = optionsByType[props.type] ? props.type : \"signup\";\n\n  // Get options object for current auth type\n  const options = optionsByType[type];\n",
+      "id": 4379417,
+      "tags": [
+        "Authentication",
+        "Form"
+      ],
+      "description": "Sign up form with background image",
+      "isVisible": true,
+      "nameLibrary": "",
+      "creator": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "id": 8182717,
+      "name": "LoadingIcon",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "svg",
+          "id": 1044390,
+          "attributes": "{\n\tfill: \"none\",\n  viewBox: \"0 0 24 24\",\n}",
+          "classNames": [
+            "animate-spin"
+          ],
+          "classNameExpressions": [
+            {
+              "js": "props.className",
+              "classNames": [
+                "{props.className}"
+              ]
+            }
+          ],
+          "children": [
+            {
+              "type": "element",
+              "tagName": "circle",
+              "id": 6675694,
+              "attributes": "{\n\tcx: \"12\",\n  cy: \"12\",\n  r: \"10\",\n  stroke: \"currentColor\",\n  strokeWidth: \"4\",\n}",
+              "classNames": [
+                "opacity-25"
+              ],
+              "isVisible": true,
+              "image": "",
+              "name": "",
+              "classNameExpressions": [],
+              "style": "",
+              "children": []
+            },
+            {
+              "type": "element",
+              "tagName": "path",
+              "id": 8113593,
+              "attributes": "{\n\tfill: \"currentColor\",\n  d: \"M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z\",\n}",
+              "classNames": [
+                "opacity-50"
+              ],
+              "isVisible": true,
+              "image": "",
+              "name": "",
+              "classNameExpressions": [],
+              "style": "",
+              "children": []
+            }
+          ],
+          "isVisible": true,
+          "image": "",
+          "name": "",
+          "style": ""
+        }
+      ],
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "code": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "name": "FormAlert",
+      "children": [
+        {
+          "type": "element",
+          "tagName": "div",
+          "id": 2040251,
+          "classNames": [
+            "text-center",
+            "p-4",
+            "rounded"
+          ],
+          "classNameExpressions": [
+            {
+              "js": "props.type === \"error\"",
+              "classNames": [
+                "text-red-600",
+                "bg-red-50"
+              ]
+            },
+            {
+              "js": "props.type === \"success\"",
+              "classNames": [
+                "text-green-600",
+                "bg-green-50"
+              ]
+            }
+          ],
+          "children": [
+            {
+              "type": "text",
+              "text": "{props.message}",
+              "id": 9455984,
+              "isVisible": true
+            }
+          ],
+          "isVisible": true,
+          "attributes": "{\n\n}",
+          "image": "",
+          "name": "",
+          "style": ""
+        }
+      ],
+      "id": 831632,
+      "isVisible": true,
+      "nameLibrary": "",
+      "description": "",
+      "tags": [],
+      "creator": "",
+      "code": "",
+      "muiStyle": "{\n\n}"
+    },
+    {
+      "type": "component",
+      "subtype": "page-component",
+      "path": "sign-in",
+      "id": 3692257,
+      "isVisible": true,
+      "code": "",
+      "description": "",
+      "requireAuth": false,
+      "children": []
+    },
+    {
+      "type": "component",
+      "subtype": "page-component",
+      "path": "dashboard",
+      "id": 1908320,
+      "isVisible": true,
+      "code": "",
+      "description": "",
+      "requireAuth": true,
+      "children": []
+    },
+    {
+      "type": "component",
+      "subtype": "page-component",
+      "path": "parking",
+      "id": 7928222,
+      "isVisible": true,
+      "code": "",
+      "description": "",
+      "requireAuth": true,
+      "children": []
+    },
+    {
+      "type": "component",
+      "subtype": "page-component",
+      "path": "detections",
+      "id": 6066678,
+      "isVisible": true,
+      "code": "",
+      "description": "",
+      "requireAuth": true,
+      "children": []
+    }
+  ]
+}
