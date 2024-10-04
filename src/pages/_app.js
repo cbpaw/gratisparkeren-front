@@ -4,6 +4,8 @@ import "util/analytics";
 import Chat from "components/Chat";
 import { AuthProvider } from "util/auth";
 import { QueryClientProvider } from "util/db";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function MyApp({ Component, pageProps }) {
   return (

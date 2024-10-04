@@ -8,7 +8,8 @@ import { firebaseApp } from "../util/firebase";
 import { getFirestore } from "firebase/firestore";
 import { useScanautoDetections } from "util/db";
 import Detections from "components/Detections";
-import axios from "axios"; // Import axios
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 function ParkingPage() {
   const db = getFirestore(firebaseApp);
@@ -19,8 +20,10 @@ function ParkingPage() {
   const { detections, detectionsStatus } = useScanautoDetections();
   const [newPlate, setNewPlate] = useState("");
   const [selectedPlate, setSelectedPlate] = useState("");
-  const [parkingDuration, setParkingDuration] = useState(30); // Default parking duration in minutes
-  const [isDetectionRunning, setIsDetectionRunning] = useState(false);
+  const [parkingDuration, setParkingDuration] = useState(30);
+  const [detectionStatus, setDetectionStatus] = useState("stopped");
+  const [parkingStatus, setParkingStatus] = useState(null);
+  const [remainingTime, setRemainingTime] = useState(null);
 
   useEffect(() => {
     if (userStatus === "success" && userData) {
@@ -29,9 +32,38 @@ function ParkingPage() {
     }
   }, [userData, userStatus]);
 
+  useEffect(() => {
+    const checkDetectionStatus = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_APP_SERVER}/detection_status`);
+        setDetectionStatus(response.data.detection_active ? "running" : "stopped");
+        console.log("Detection status:", response.data.detection_active);
+      } catch (error) {
+        console.error("Error checking detection status:", error);
+      }
+    };
+
+    checkDetectionStatus();
+    const intervalId = setInterval(checkDetectionStatus, 10000); // Check every 10 seconds
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    if (activePlate) {
+      getParkingStatus();
+      const intervalId = setInterval(getParkingStatus, 60000); // Check every minute
+      return () => clearInterval(intervalId);
+    } else {
+      setParkingStatus(null);
+      setRemainingTime(null);
+    }
+  }, [activePlate]);
+
   const handleAddPlate = async (plate) => {
     if (!user) {
       console.error("User is not authenticated");
+      toast.error("User is not authenticated");
       return;
     }
 
@@ -46,6 +78,7 @@ function ParkingPage() {
       setNewPlate("");
     } catch (error) {
       console.error("Error adding license plate:", error);
+      toast.error(`Error adding license plate: ${error.message}`);
     }
   };
 
@@ -62,6 +95,7 @@ function ParkingPage() {
       }
     } catch (error) {
       console.error("Error removing license plate:", error);
+      toast.error(`Error removing license plate: ${error.message}`);
     }
   };
 
@@ -71,28 +105,36 @@ function ParkingPage() {
       setActivePlate(plate);
     } catch (error) {
       console.error("Error activating license plate:", error);
+      toast.error(`Error activating license plate: ${error.message}`);
     }
   };
 
   const activateParking = async () => {
     try {
-      await axios.post("http://localhost:5000/activate_parking", {
+      await axios.post(`${process.env.NEXT_PUBLIC_APP_SERVER}/activate_parking`, {
         license_plate: selectedPlate,
         duration_minutes: parkingDuration,
       });
       handleActivatePlate(selectedPlate);
       console.log("Parking started");
+      toast.success("Parking activated successfully");
+      getParkingStatus();
     } catch (error) {
       console.error("Error activating parking:", error);
+      toast.error(`Error activating parking: ${error.response?.data?.message || error.message}`);
     }
   };
 
   const getParkingStatus = async () => {
+    if (!activePlate) return;
+
     try {
       const response = await axios.get(
-        `http://localhost:5000/parking_status?license_plate=${activePlate}`
+        `${process.env.NEXT_PUBLIC_APP_SERVER}/parking_status?license_plate=${activePlate}`
       );
       const { status, remaining_time } = response.data;
+      setParkingStatus(status);
+      setRemainingTime(remaining_time);
       if (status === "active") {
         console.log(`Parking active for ${activePlate}, remaining time: ${remaining_time}`);
       } else {
@@ -100,24 +142,31 @@ function ParkingPage() {
       }
     } catch (error) {
       console.error("Error getting parking status:", error);
+      toast.error(`Error getting parking status: ${error.response?.data?.message || error.message}`);
     }
   };
 
   const startDetection = async () => {
     try {
-      await axios.post("http://localhost:5000/start_detection");
-      setIsDetectionRunning(true);
+      setDetectionStatus("starting");
+      await axios.post(`${process.env.NEXT_PUBLIC_APP_SERVER}/start_detection`);
+      setDetectionStatus("running");
+      toast.success("Detection started successfully");
     } catch (error) {
       console.error("Error starting detection:", error);
+      toast.error(`Error starting detection: ${error.response?.data?.message || error.message}`);
+      setDetectionStatus("stopped");
     }
   };
 
   const stopDetection = async () => {
     try {
-      await axios.post("http://localhost:5000/stop_detection");
-      setIsDetectionRunning(false);
+      await axios.post(`${process.env.NEXT_PUBLIC_APP_SERVER}/stop_detection`);
+      setDetectionStatus("stopped");
+      toast.success("Detection stopped successfully");
     } catch (error) {
       console.error("Error stopping detection:", error);
+      toast.error(`Error stopping detection: ${error.response?.data?.message || error.message}`);
     }
   };
 
@@ -132,6 +181,7 @@ function ParkingPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <Meta title="Parking" />
+      <ToastContainer />
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Manage License Plates</h2>
         <div className="flex mb-4">
@@ -173,12 +223,20 @@ function ParkingPage() {
       </div>
 
       <div>
-        <h2 className="text-2xl font-bold mb-4">Activate Parking</h2>
+        <h2 className="text-2xl font-bold mb-4">Parking Status</h2>
         {activePlate ? (
-          <div className="bg-green-100 p-4 rounded-md">
+          <div className={`p-4 rounded-md ${parkingStatus === 'active' ? 'bg-green-100' : 'bg-yellow-100'}`}>
             <p className="mb-2">
               Current active plate: <strong>{activePlate}</strong>
             </p>
+            <p className="mb-2">
+              Status: <strong>{parkingStatus === 'active' ? 'Active' : 'Inactive'}</strong>
+            </p>
+            {parkingStatus === 'active' && remainingTime && (
+              <p className="mb-2">
+                Remaining time: <strong>{remainingTime}</strong>
+              </p>
+            )}
             <button
               onClick={() => handleActivatePlate(null)}
               className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
@@ -189,7 +247,7 @@ function ParkingPage() {
               onClick={getParkingStatus}
               className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md hover:bg-blue-600 transition-colors"
             >
-              Get Parking Status
+              Refresh Status
             </button>
           </div>
         ) : (
@@ -230,20 +288,30 @@ function ParkingPage() {
 
       <div className="mt-8">
         <h2 className="text-2xl font-bold mb-4">Stream Detection</h2>
-        <div className="flex items-center">
+        <div className="flex items-center space-x-4">
           <button
-            onClick={isDetectionRunning ? stopDetection : startDetection}
+            onClick={detectionStatus === "running" ? stopDetection : startDetection}
             className={`px-4 py-2 rounded-md transition-colors ${
-              isDetectionRunning
+              detectionStatus === "running"
                 ? "bg-red-500 text-white hover:bg-red-600"
                 : "bg-green-500 text-white hover:bg-green-600"
             }`}
           >
-            {isDetectionRunning ? "Stop Detection" : "Start Detection"}
+            {detectionStatus === "running" ? "Stop Detection" : "Start Detection"}
           </button>
-          <span className="ml-4">
-            {isDetectionRunning ? "Detection is running" : "Detection is stopped"}
-          </span>
+          <div className={`flex items-center ${
+            detectionStatus === "running" ? 'text-green-500' : 
+            detectionStatus === "starting" ? 'text-yellow-500' : 'text-red-500'
+          }`}>
+            <div className={`w-3 h-3 rounded-full mr-2 ${
+              detectionStatus === "running" ? 'bg-green-500' : 
+              detectionStatus === "starting" ? 'bg-yellow-500' : 'bg-red-500'
+            }`}></div>
+            <span className="font-semibold">
+              {detectionStatus === "running" ? "Detection is running" : 
+               detectionStatus === "starting" ? "Detection is starting" : "Detection is stopped"}
+            </span>
+          </div>
         </div>
       </div>
 
