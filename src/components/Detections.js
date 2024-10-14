@@ -3,7 +3,7 @@ import { useScanautoDetections } from '../util/db';
 import { formatDistanceToNow } from 'date-fns';
 
 const Detections = () => {
-    const { data, isLoading, error } = useScanautoDetections(100);
+    const { data, isLoading, error } = useScanautoDetections(500);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
     const [filter, setFilter] = useState({ isScanauto: 'all', confidence: 0 });
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,8 +28,8 @@ const Detections = () => {
     const filteredData = useMemo(() => {
         return sortedData.filter(item => {
             const isScanautoMatch = filter.isScanauto === 'all' || 
-                (filter.isScanauto === 'yes' && item.analyzer_result.is_scanauto) ||
-                (filter.isScanauto === 'no' && !item.analyzer_result.is_scanauto);
+                (item.analyzer_result.is_scan_car) ||
+                (!item.analyzer_result.is_scan_car);
             const confidenceMatch = item.analyzer_result.confidence * 100 >= filter.confidence;
             return isScanautoMatch && confidenceMatch;
         });
@@ -89,87 +89,96 @@ const Detections = () => {
                 </label>
             </div>
             <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Image
-                            </th>
-                            <th 
-                                scope="col" 
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                onClick={() => requestSort('timestamp')}
-                            >
-                                Time {sortConfig.key === 'timestamp' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Time Ago
-                            </th>
-                            <th 
-                                scope="col" 
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                onClick={() => requestSort('analyzer_result.is_scanauto')}
-                            >
-                                Is Scanauto {sortConfig.key === 'analyzer_result.is_scanauto' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                            </th>
-                            <th 
-                                scope="col" 
-                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                onClick={() => requestSort('analyzer_result.confidence')}
-                            >
-                                Confidence {sortConfig.key === 'analyzer_result.confidence' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Description
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                        {paginatedData.map((detection) => (
-                            <tr key={detection.id} className="hover:bg-gray-50">
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <img src={detection.cropped_image_url} alt="Detected vehicle" className="h-20 w-auto object-cover rounded-md"/>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {new Date(detection.timestamp.seconds * 1000).toLocaleString()}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {formatDistanceToNow(new Date(detection.timestamp.seconds * 1000))} ago
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${detection.analyzer_result.is_scanauto ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                                        {detection.analyzer_result.is_scanauto ? 'Yes' : 'No'}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {(detection.analyzer_result.confidence * 100).toFixed(2)}%
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-500">
-                                    {detection.analyzer_result.description}
-                                </td>
+                <div className="w-full overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Image
+                                </th>
+                                <th 
+                                    scope="col" 
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => requestSort('timestamp')}
+                                >
+                                    Time {sortConfig.key === 'timestamp' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                                </th>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Time Ago
+                                </th>
+                                <th 
+                                    scope="col" 
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => requestSort('analyzer_result.is_scan_car')}
+                                >
+                                    Is Scanauto {sortConfig.key === 'analyzer_result.is_scan_car' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                                </th>
+                                <th 
+                                    scope="col" 
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => requestSort('analyzer_result.confidence')}
+                                >
+                                    Confidence {sortConfig.key === 'analyzer_result.confidence' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                                </th>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Description
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {paginatedData.map((detection) => (
+                                <tr key={detection.id} className="hover:bg-gray-50">
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <img src={detection.cropped_image_url} alt="Detected vehicle" className="h-20 w-auto object-cover rounded-md"/>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {new Date(detection.timestamp.seconds * 1000).toLocaleString()}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {formatDistanceToNow(new Date(detection.timestamp.seconds * 1000))} ago
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${detection.analyzer_result.is_scan_car ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                                            {detection.analyzer_result.is_scan_car ? 'Yes' : 'No'}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {(detection.analyzer_result.confidence * 100).toFixed(2)}%
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-500">
+                                        {detection.analyzer_result.description}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div className="mt-4 flex justify-between items-center">
-                <button
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                    className="px-4 py-2 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    Previous
-                </button>
-                <span className="text-sm text-gray-700">
-                    Page {currentPage} of {pageCount}
-                </span>
-                <button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, pageCount))}
-                    disabled={currentPage === pageCount}
-                    className="px-4 py-2 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    Next
-                </button>
+            <div className="mt-4 flex flex-col sm:flex-row justify-between items-center">
+                <div className="mb-2 sm:mb-0">
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        Previous
+                    </button>
+                    <span className="mx-2 text-sm text-gray-700">
+                        Page {currentPage} of {pageCount}
+                    </span>
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, pageCount))}
+                        disabled={currentPage === pageCount}
+                        className="px-4 py-2 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        Next
+                    </button>
+                </div>
+                <div className="mt-2 sm:mt-0">
+                    <span className="text-sm text-gray-700">
+                        Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, filteredData.length)} of {filteredData.length} results
+                    </span>
+                </div>
             </div>
         </div>
     );

@@ -119,7 +119,7 @@ export function deleteItem(id) {
 /**** SCANAUTO DETECTIONS ****/
 
 // Subscribe to all scanauto detections
-export function useScanautoDetections(limitCount = 100) {
+export function useScanautoDetections(limitCount = 500) {
   return useQuery(
     ["scanauto_detections", { limit: limitCount }],
     createQuery(() =>

@@ -13,7 +13,7 @@ function SignInPage(props) {
         bgImageOpacity={0.8}
         textColor="text-white"
         type="signin"
-        providers={["google", "facebook", "twitter"]}
+        providers={["google"]}
         afterAuthPath="/parking"
       />
     </>

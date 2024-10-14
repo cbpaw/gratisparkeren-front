@@ -6,13 +6,11 @@ import { AuthProvider } from "util/auth";
 import { QueryClientProvider } from "util/db";
 import 'react-toastify/dist/ReactToastify.css';
 
-
 function MyApp({ Component, pageProps }) {
   return (
     <QueryClientProvider>
       <AuthProvider>
         <Chat />
-
         <Component {...pageProps} />
       </AuthProvider>
     </QueryClientProvider>
